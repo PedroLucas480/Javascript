@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tipos de saída em javascript </title>
+</head>
+
+<body>
+    <h1>Tipos de saída em javascript</h1>
+    <p>Vamos aprender as diferentes formas de exivir formações com javascript</p>
+    <ol>
+        <li>
+            <h2>1. Exibir através de um elemento HTML usando
+                <code>getElementById</code>
+            </h2>
+            <p>Utilizamos <code>document.getElementById</code> para acessar o elemento com um ID específico</p>
+            <p>Em seguida, usamos <code>TextContent</code> ou <code>InnerHTML</code> para mostrar o conteúdo</p>
+            <p id="tx1"></p>
+            <script>
+                document.getElementById('tx1').textContent = "Este texto foi inserido com getElementById e TextConent"
+            </script>
+        </li>
+
+        <li>
+            <h2>2. Exibir com <code>document.write()</code></h2>
+            <p>Este método escreve diretamente no corpo da página. Não é recomendado para uso moderno, mas ainda
+                funciona. </p>
+            <script>
+                document.write("Esta informação foi escrita com <code> document.write()</code>")
+            </script>
+        </li>
+        <li>
+            <h2>3. Exibir com <code>alert()</code></h2>
+            <p>Este comando exibe uma janela de alerta para o usuário</p>
+            <script>
+                alert("Esta mensagem foi exivida com alert()")
+            </script>
+
+        </li>
+        <li>
+            <h2>4. Exibir com <code>console.log()</code></h2>
+            <p>Este método exibe mensagens no console do navegador (F12 aba console).</p>
+            <script>
+                // Mostra uma mensagem no console
+                console.log("Esta é uma mensagem exibida com console.log()")
+                // Pergunta o nome do usuario e armazena a resposta
+                const nome = prompt("Digite seu nome:");
+                console.log("Nome digitado: "+nome)
+
+                // Pergunta se deseja fechar o programa
+                const desejaFechar = confirm("Olá " + nome + " Deseja fechar o programa?")
+
+                if(desejaFechar){
+                    console.log("O usuário escolheu fechar o programa.")
+                    alert("Programa encerrado.")
+                    // window.close(); // Pode ser usado se a aba for aberta por script]
+
+                } else {
+                    console.log("O usuário decidiu continuar no programa.");
+                    alert("Continuando no programa.")
+                }
+            </script>
+        </li>
+    </ol>
+</body>
+
+</html>

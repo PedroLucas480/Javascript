@@ -1,0 +1,1 @@
+alert('Este é um js extremo')
