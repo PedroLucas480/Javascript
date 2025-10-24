@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inserindo Valores</title>
+    <style>
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            padding: 20px;
+        }
+        h1 {
+            color: #333;
+        }
+        .campo {
+            margin-bottom: 15px;
+        }
+        .rotulo {
+            font-weight: bold;
+        }
+        .valor {
+            border: 1px solid #000;
+            width: 300px;
+            padding: 8px;
+            background-color: #ffffff;
+        }
+        input {
+            padding: 5px;
+            width: 100px;
+            margin: 5px;
+        }
+        button {
+            padding: 8px 15px;
+            margin-top: 15px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Inserindo valores</h1>
+
+    <div class="campo">
+        <div class="rotulo">Nome:</div>
+        <div class="valor" id="nome">---</div>
+    </div>
+
+    <div class="campo">
+        <div class="rotulo">Idade:</div>
+        <div class="valor" id="idade">---</div>
+    </div>
+
+    <div class="campo">
+        <div class="rotulo">Nacionalidade:</div>
+        <div class="valor" id="nascio">---</div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

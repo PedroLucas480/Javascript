@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Eventos de Mouse</title>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #f0f4f8;
+      margin: 0;
+      padding: 20px;
+      text-align: center;
+    }
+
+    h1 {
+      color: #333;
+    }
+
+    p, li {
+      color: #555;
+      font-size: 1rem;
+    }
+
+    ul {
+      text-align: left;
+      max-width: 800px;
+      margin: 0 auto 30px;
+    }
+
+    button {
+      padding: 12px 16px;
+      margin: 8px;
+      border: none;
+      border-radius: 8px;
+      background-color: #4CAF50;
+      color: white;
+      font-weight: bold;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    button:hover {
+      background-color: #45a049;
+    }
+
+    input[type="text"] {
+      display: block;
+      margin: 10px auto;
+      padding: 12px;
+      width: 80%;
+      max-width: 400px;
+      border: 2px solid #ccc;
+      border-radius: 6px;
+      font-size: 1rem;
+    }
+
+    input[type="reset"] {
+      padding: 10px 20px;
+      background-color: #f44336;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: bold;
+      margin-top: 15px;
+    }
+
+    input[type="reset"]:hover {
+      background-color: #d32f2f;
+    }
+
+    .areas {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      flex-wrap: wrap;
+      margin-top: 40px;
+    }
+
+    .area {
+      width: 250px;
+      height: 250px;
+      background-color: #fff;
+      border: 2px solid #ccc;
+      border-radius: 10px;
+      box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
+      display: flex;
+      align-items: flex-end;
+      justify-content: center;
+      transition: background-color 0.3s ease;
+    }
+
+    #area3 {
+      position: relative;
+    }
+
+    #areainterna {
+      width: 25px;
+      height: 25px;
+      position: absolute;
+      background-color: red;
+      top: 0;
+      left: 0;
+      transition: all 0.3s ease;
+    }
+  </style>
+</head>
+
+<body>
+  <h1>Eventos de Mouse</h1>
+  <p>Nesta aula vamos entender o que é um evento de mouse.</p>
+  <p>Eventos são ações disparadas pela interação dos usuários na página.</p>
+  <p>E a aplicação desses eventos tornam as páginas interativas e dinâmicas.</p>
+
+  <ul>
+    <li><strong>onclick</strong> → Disparado quando recebe um clique.</li>
+    <li><strong>ondblclick</strong> → Disparado quando recebe um clique duplo.</li>
+    <li><strong>onmouseover</strong> → Disparado quando o mouse está sobre o elemento.</li>
+    <li><strong>onmouseout</strong> → Disparado quando o mouse sai do elemento.</li>
+    <li><strong>onmousemove</strong> → Disparado quando o mouse se move dentro do elemento.</li>
+    <li><strong>onmousedown</strong> → Quando o botão do mouse é pressionado.</li>
+    <li><strong>onmouseup</strong> → Quando o botão do mouse é solto.</li>
+    <li><strong>onfocus</strong> → Quando o elemento recebe o foco.</li>
+    <li><strong>onblur</strong> → Quando o elemento perde o foco.</li>
+    <li><strong>onchange</strong> → Quando o valor de um campo é alterado.</li>
+    <li><strong>onkeypress</strong> → Quando uma tecla é pressionada e solta.</li>
+    <li><strong>onkeydown</strong> → Quando uma tecla é pressionada.</li>
+    <li><strong>onkeyup</strong> → Quando uma tecla é solta.</li>
+    <li><strong>onreset</strong> → Quando um formulário é resetado.</li>
+  </ul>
+
+  <h1>Testes de Botão</h1>
+  <button onclick="area1clickMouse()">onclick</button>
+  <button ondblclick="area1clickduplo()">ondblclick</button>
+  <button onmouseover="area1PasseMouse()">onmouseover</button>
+  <button onmouseout="area1TiraMouse()">onmouseout</button>
+  <button onmousemove="eventoMoverMouse()">onmousemove</button>
+  <button onmousedown="eventoPressionaMouse()">onmousedown</button>
+  <button onmouseup="eventoSoltaMouse()">onmouseup</button>
+  <button onfocus="eventoFoco()">onfocus</button>
+  <button onblur="eventoSaiFoco()">onblur</button>
+
+  <form onreset="eventoReset()">
+    <input id="area4" type="text" onchange="eventoAlterou()" placeholder="Digite algo (onchange)">
+    <input id="area5" type="text" onkeypress="eventoMoverMouse()" placeholder="Digite algo (onkeypress)">
+    <input id="area6" type="text" onkeydown="eventoPressionaMouse()" placeholder="Digite algo (onkeydown)">
+    <input id="area7" type="text" onkeyup="eventoSoltaMouse()" placeholder="Digite algo (onkeyup)">
+    <input type="reset" value="Limpar Tudo">
+  </form>
+
+  <div class="areas">
+    <div class="area" id="area1">
+      <h1>Área1</h1>
+    </div>
+    <div class="area" id="area2">
+      <h1>Área2</h1>
+    </div>
+    <div class="area" id="area3">
+      <h1>Área3</h1>
+      <div id="areainterna"></div>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>polo</title>
+    <style>
+        header{
+            background-color: purple;
+            height: 100px;
+            margin: 5px;
+        }
+
+        main{
+            background-color: rgb(11, 128, 0);
+            height: 750px;
+            margin: 5px;
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            grid-template-rows:1fr 1fr 1fr ;
+        }
+
+        section{
+            background-color: rgb(23, 28, 75);
+          
+            grid-column: 1/2;
+            grid-row: 1/4;
+        }
+
+        aside{
+            background-color: rgb(147, 1, 1);
+           
+            margin-left: 15px;
+            grid-column: 2/3;
+            grid-row: 1/4;
+
+           
+        }
+        #box1{
+            background-color: rgb(48, 36, 36);
+            
+            margin-left: 15px;
+            grid-column: 3/4;
+            grid-row: 1/4;
+
+           
+        }
+
+        footer{
+            background-color: purple;
+            height: 80px;
+            margin: 5px;
+        }
+
+        article{
+            background-color: rgb(55, 0, 255);
+            height: 200px;
+            width: 60%;
+            margin: 5px;
+        }
+
+    </style>
+</head>
+<body>
+    <header></header>
+    <main>
+        <section></section>
+        <aside></aside>
+        <aside id="box1"></aside>
+        <article></article>
+        
+    </main>
+    <footer></footer>
+
+    
+</body>
+</html>

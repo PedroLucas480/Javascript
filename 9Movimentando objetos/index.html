@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>movimentos de objetos</title>
+    <Style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            height: 100VH;
+            background-color: blue;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+            font-family: 'Segoe UI', sans-serif;
+            overflow: hidden;
+            color: brown;
+            padding-top: 20px;
+        }
+
+        h1 {
+            margin-top: 10px;
+            font-size: 2em;
+            margin-bottom: 5px;
+            background-color: chartreuse;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: darkblue;
+            text-shadow: black;
+        }
+
+        #layout {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 40px;
+            margin-top: 20px;
+        }
+
+        #gamecontainer {
+            position: relative;
+            width: fit-content;
+            border: 4px solid burlywood;
+            border-radius: 12px;
+            box-shadow: 0 0 20px rgb(3, 204, 63);
+        }
+
+        canvas {
+            display: block;
+            background-color: aqua;
+        }
+
+        #objetonaoindetificado {
+            position: absolute;
+            width: 28px;
+            height: 28px;
+            background-image: url(imagem\40483.png);
+            background-size: cover;
+            filter: drop-shadow(0 0 8px white);
+            top: 0;
+            left: 0;
+            transition: tod 0.1s, left 0.1s;
+        }
+        #infolateral{
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            justify-content: center;
+            height: 700px;
+        }
+        #timer{
+            font-size: 1.2em;
+            margin-bottom: 20px;
+            color: aliceblue;
+        }
+        #ranking{
+            font-size: 1em;
+            background-color: blue;
+            padding: 10px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px white;
+            margin-bottom: 20px;
+        }
+        #reiniciar{
+            background-color: aliceblue;
+            color: blue;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1em;
+            transition: background 0.3s;
+        }
+        #reiniciar:hover{
+            background-color:white ;
+        }
+    </Style>
+</head>
+<body>
+<h1>movimentando objetos</h1>
+<div id="layout"></div>
+<div id="gamecontainer"></div>
+<span id="objetonaoindetificado"></span>
+<canvas width="700"height="700"></canvas>
+
+
+<div></div>
+</body>
+
+</html>
