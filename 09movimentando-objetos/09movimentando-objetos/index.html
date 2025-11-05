@@ -1,0 +1,270 @@
+<!DOCTYPE html> 
+<html lang="pt-br"> 
+<head>
+  <meta charset="UTF-8" /> 
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/> 
+  <title>Movimentando Objetos</title> 
+  <style>
+    * { /* Reset de estilos padrão */
+      margin: 0; /* Remove margem */
+      padding: 0; /* Remove padding */
+      box-sizing: border-box; /* Inclui borda e padding no tamanho total */
+    }
+
+    body {
+      height: 100vh; /* Altura de 100% da viewport */
+      background: linear-gradient(to right, #0f2027, #203a43, #2c5364); /* Fundo em degradê */
+      display: flex; /* Layout com flexbox */
+      flex-direction: column; /* Coloca os itens em coluna */
+      align-items: center; /* Centraliza horizontalmente */
+      justify-content: flex-start; /* Alinha ao topo */
+      font-family: 'Segoe UI', sans-serif; /* Fonte da página */
+      overflow: hidden; /* Esconde rolagem */
+      color: #e0ffe0; /* Cor do texto */
+      padding-top: 20px; /* Espaçamento superior */
+    }
+
+    h1 {
+      margin-top: 10px; /* Espaço superior */
+      font-size: 2em; /* Tamanho da fonte */
+      margin-bottom: 5px; /* Espaço inferior */
+      background: linear-gradient(to right, #00c853, #64dd17); /* Texto com degradê */
+      -webkit-background-clip: text; /* Aplica o fundo ao texto */
+      -webkit-text-fill-color: transparent; /* Deixa o texto transparente para ver o fundo */
+      text-shadow: 1px 1px 2px black; /* Sombra no texto */
+    }
+
+    #layout {
+      display: flex; /* Flexbox para organizar o layout */
+      justify-content: center; /* Centraliza horizontalmente */
+      align-items: center; /* Centraliza verticalmente */
+      gap: 40px; /* Espaço entre os elementos */
+      margin-top: 20px; /* Espaço acima do layout */
+    }
+
+    #gameContainer {
+      position: relative; /* Para posicionamento absoluto do objeto */
+      width: fit-content; /* Tamanho ajustado ao conteúdo */
+      border: 4px solid #64dd17; /* Borda verde */
+      border-radius: 12px; /* Cantos arredondados */
+      box-shadow: 0 0 20px #00e676; /* Brilho ao redor */
+    }
+
+    canvas {
+      display: block; /* Remove espaço inferior padrão */
+      background-color: #f5f5f5; /* Cor de fundo do canvas */
+    }
+
+    #objetoNaoIdentificado {
+      position: absolute; /* Posicionado dentro do container */
+      width: 28px; /* Largura do objeto */
+      height: 28px; /* Altura do objeto */
+      background-image: url(imagens/40483.png); /* Imagem usada no objeto */
+      background-size: cover; /* A imagem cobre toda a área */
+      filter: drop-shadow(0 0 8px white); /* Sombra branca ao redor */
+      top: 0; /* Posição vertical inicial */
+      left: 0; /* Posição horizontal inicial */
+      transition: top 0.1s, left 0.1s; /* Animação suave ao mover */
+    }
+
+    #infoLateral {
+      display: flex; /* Layout flex */
+      flex-direction: column; /* Alinha os itens verticalmente */
+      align-items: flex-start; /* Alinha à esquerda */
+      justify-content: center; /* Centraliza verticalmente */
+      height: 700px; /* Altura fixa */
+    }
+
+    #timer {
+      font-size: 1.2em; /* Tamanho do texto */
+      margin-bottom: 20px; /* Espaçamento abaixo */
+      color: #c8ffc8; /* Cor verde clara */
+    }
+
+    #ranking {
+      font-size: 1em; /* Tamanho da fonte */
+      background-color: #003300; /* Fundo escuro */
+      padding: 10px; /* Espaçamento interno */
+      border-radius: 10px; /* Cantos arredondados */
+      box-shadow: 0 0 10px #00e676; /* Brilho externo */
+      margin-bottom: 20px; /* Espaço inferior */
+    }
+
+    #reiniciar {
+      background-color: #00c853; /* Cor de fundo verde */
+      color: white; /* Cor do texto */
+      padding: 10px 20px; /* Espaçamento interno */
+      border: none; /* Sem borda */
+      border-radius: 8px; /* Cantos arredondados */
+      cursor: pointer; /* Cursor tipo mão */
+      font-size: 1em; /* Tamanho da fonte */
+      transition: background 0.3s; /* Animação no hover */
+    }
+
+    #reiniciar:hover {
+      background-color: #00e676; /* Cor ao passar o mouse */
+    }
+  </style>
+</head>
+<body>
+  <h1>Movimentando Objetos</h1> <!-- Título principal -->
+
+  <div id="layout"> <!-- Container principal -->
+    <div id="gameContainer"> <!-- Área do jogo -->
+      <span id="objetoNaoIdentificado"></span> <!-- Objeto que se move -->
+      <canvas width="700" height="700"></canvas> <!-- Área de desenho do labirinto -->
+    </div>
+
+    <div id="infoLateral"> <!-- Painel lateral -->
+      <div id="timer">⏱️ Tempo: <span id="contador">0</span> segundos</div> <!-- Contador de tempo -->
+      <div id="ranking"> <!-- Ranking dos melhores tempos -->
+        🏆 <strong>Top 3 Melhores Tempos:</strong>
+        <ul id="melhoresTempos"></ul> <!-- Lista de tempos -->
+      </div>
+      <button id="reiniciar">🔁 Reiniciar Jogo</button> <!-- Botão para reiniciar -->
+    </div>
+  </div>
+
+  <script>
+    const obj = document.getElementById("objetoNaoIdentificado"); // Objeto que será movimentado
+    const canvas = document.querySelector("canvas"); // Seleciona o canvas
+    const ctx = canvas.getContext("2d"); // Contexto 2D para desenho
+    const tileSize = 35; // Tamanho de cada bloco do labirinto
+    const chegada = { row: 19, col: 18 }; // Posição final para vencer o jogo
+    const contadorSpan = document.getElementById("contador"); // Elemento do cronômetro
+    const rankingList = document.getElementById("melhoresTempos"); // Lista de melhores tempos
+    const btnReiniciar = document.getElementById("reiniciar"); // Botão de reinício
+
+    let x = 0; // Posição horizontal inicial
+    let y = 0; // Posição vertical inicial
+    let tempo = 0; // Tempo em segundos
+    let intervalo; // Referência do setInterval
+    let fimDeJogo = false; // Flag de término do jogo
+    let historicoTempos = []; // Array de tempos registrados
+
+    const maze = [
+[0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
+[0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,1],
+[1,1,1,1,1,1,1,1,1,1,0,0,0,0,0,1,1,1,0,1],
+[1,0,0,0,0,0,0,0,0,1,1,1,1,1,0,1,0,0,0,1],
+[1,1,0,1,1,1,1,1,0,0,0,0,0,1,0,1,1,0,0,1],
+[1,0,0,0,0,0,1,0,0,1,0,0,0,1,0,0,1,0,0,1],
+[1,0,1,1,1,0,1,0,0,1,1,1,1,1,1,1,1,1,0,1],
+[1,0,1,0,0,0,1,0,0,0,0,0,0,1,0,1,0,0,0,1],
+[1,0,1,1,1,1,1,1,1,1,1,1,0,0,0,1,0,1,0,1],
+[1,0,0,0,0,0,0,0,0,1,0,0,0,1,0,0,0,1,0,1],
+[1,1,1,1,1,1,1,0,1,1,1,1,1,1,1,1,1,1,0,1],
+[1,0,0,0,0,0,1,0,1,0,0,0,1,0,0,0,0,0,0,1],
+[1,1,0,1,1,0,1,0,1,0,1,0,1,0,1,1,1,1,0,1],
+[1,0,0,0,1,0,1,0,1,0,1,0,0,0,0,0,0,0,0,1],
+[1,0,1,0,1,0,1,0,1,0,1,1,1,1,1,1,1,1,1,1],
+[1,0,1,0,1,0,1,0,1,0,0,0,1,0,0,0,0,0,0,1],
+[1,0,1,0,1,0,0,0,1,1,1,0,0,0,1,1,1,1,0,1],
+[1,0,1,1,1,1,1,1,1,0,1,1,1,1,1,0,0,1,1,1],
+[1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
+[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,1]
+];
+    function renderMaze() { // Função para desenhar o labirinto
+      ctx.clearRect(0, 0, canvas.width, canvas.height); // Limpa o canvas
+      for (let row = 0; row < maze.length; row++) {
+        for (let col = 0; col < maze[row].length; col++) {
+          if (maze[row][col] === 1) {
+            ctx.fillStyle = "#2e7d32"; // Cor da parede
+            ctx.fillRect(col * tileSize, row * tileSize, tileSize, tileSize); // Desenha o bloco
+          }
+        }
+      }
+    }
+
+    function podeMover(novoX, novoY) { // Verifica se o movimento é permitido
+      const col = Math.floor(novoX / tileSize); // Coluna do novo X
+      const row = Math.floor(novoY / tileSize); // Linha do novo Y
+      if (row < 0 || row >= maze.length || col < 0 || col >= maze[0].length) return false; // Fora dos limites
+      return maze[row][col] === 0; // Retorna true se for caminho livre
+    }
+
+    function chegouNoFinal() { // Verifica se chegou ao destino
+      const col = Math.floor(x / tileSize);
+      const row = Math.floor(y / tileSize);
+      return row === chegada.row && col === chegada.col;
+    }
+
+    window.addEventListener("keydown", (event) => { // Evento ao pressionar tecla
+      if (fimDeJogo) return; // Ignora se o jogo acabou
+
+      let novoX = x;
+      let novoY = y;
+      const tecla = event.keyCode;
+
+      if (tecla === 39) novoX += tileSize; // Direita
+      else if (tecla === 37) novoX -= tileSize; // Esquerda
+      else if (tecla === 38) novoY -= tileSize; // Cima
+      else if (tecla === 40) novoY += tileSize; // Baixo
+
+      if (podeMover(novoX, novoY)) {
+        x = novoX;
+        y = novoY;
+        obj.style.left = x + "px"; // Atualiza posição horizontal
+        obj.style.top = y + "px"; // Atualiza posição vertical
+
+        if (chegouNoFinal()) {
+          fimDeJogo = true; // Marca fim de jogo
+          clearInterval(intervalo); // Para o cronômetro
+          alert(`🎉 Parabéns! Você chegou no final em ${tempo} segundos!`); // Mensagem de vitória
+          historicoTempos.push(tempo); // Armazena tempo
+          historicoTempos.sort((a, b) => a - b); // Ordena em ordem crescente
+          if (historicoTempos.length > 3) historicoTempos.length = 3; // Mantém apenas top 3
+          atualizarRanking(); // Atualiza ranking na tela
+        }
+      }
+    });
+
+    function atualizarRanking() { // Atualiza os melhores tempos
+      rankingList.innerHTML = ""; // Limpa lista
+      historicoTempos.forEach((t, i) => {
+        const li = document.createElement("li"); // Cria item de lista
+        li.textContent = `${i + 1}º lugar: ${t} segundos`; // Texto do item
+        rankingList.appendChild(li); // Adiciona à lista
+      });
+    }
+
+    function iniciarTempo() { // Inicia o cronômetro
+      tempo = 0;
+      contadorSpan.textContent = tempo;
+      intervalo = setInterval(() => {
+        tempo++;
+        contadorSpan.textContent = tempo;
+      }, 1000);
+    }
+
+    function reiniciarJogo() { // Reinicia o jogo
+      x = 0;
+      y = 0;
+      obj.style.left = x + "px";
+      obj.style.top = y + "px";
+      fimDeJogo = false;
+      clearInterval(intervalo);
+      iniciarTempo();
+    }
+
+    btnReiniciar.addEventListener("click", reiniciarJogo); // Evento de clique no botão
+
+    function loop() { // Loop de renderização
+      renderMaze(); // Desenha o labirinto
+      requestAnimationFrame(loop); // Chama o loop novamente
+    }
+
+    iniciarTempo(); // Começa o cronômetro ao carregar
+    loop(); // Inicia o desenho do labirinto
+  </script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+

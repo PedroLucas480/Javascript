@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>calculadora</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', tahoma, geneva, verdana, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #ff0000, #2a5298); /* Fundo com gradiente azul diagonal */
+            height: 100vh; /* Ocupa toda a altura da tela */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        main {
+            background-color: rgb(255, 255, 255);
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
+            width: 300px; /* largura fixa para centralizar */
+        }
+
+        h1 {
+            color: rgb(255, 251, 0);
+            text-align: center;
+            margin-bottom: 15px; /* espaço abaixo do título */
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        input[name="expressao"] {
+            background-color: rgb(95, 3, 108);
+            color: rgb(255, 255, 255);
+            font-size: 24px;
+            padding: 15px;
+            border: none;
+            border-radius: 10px;
+            text-align: right;
+            pointer-events: none;
+        }
+
+        .options {
+            display: grid;
+            grid-template-columns: repeat(4, 60px);
+            justify-content: center; /* centraliza o grid dentro do main */
+            gap: 10px; /* <-- adiciona espaçamento entre os botões */
+        }
+
+        .options span {
+            background-color: rgb(144, 1, 99);
+            padding: 15px;
+            font-size: 18px;
+            text-align: center;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.2s ease-in-out;
+            user-select: none;
+            font-weight: bold;
+        }
+
+        .options span:hover {
+            background-color: rgb(1, 147, 150);
+            transform: scale(1.05);
+        }
+
+        .options span.limpa {
+            grid-column: span 4;
+            background-color: red;
+            color: aliceblue;
+        }
+
+        .options span.limpa:hover {
+            background-color: darkred;
+        }
+    </style>
+</head>
+
+<body>
+    <main>
+        <h1>Calculadora</h1>
+        <form name="calculadora">
+            <input type="text" name="expressao" readonly />
+            <div class="options">
+                <span>7</span>
+                <span>8</span>
+                <span>9</span>
+                <span>*</span>
+                <span>4</span>
+                <span>5</span>
+                <span>6</span>
+                <span>-</span>
+                <span>1</span>
+                <span>2</span>
+                <span>3</span>
+                <span>+</span>
+                <span>/</span>
+                <span>0</span>
+                <span>,</span>
+                <span>=</span>
+                <span class="limpa">LIMPA</span>
+            </div>
+        </form>
+    </main>
+
+    <script>
+        document.querySelectorAll('form span').forEach(item => {
+            item.addEventListener('click', () => {
+                addVal(item.innerHTML);
+            });
+        });
+
+        function addVal(valor) {
+            if (valor === 'LIMPA') {
+                document.calculadora.expressao.value = "";
+            } else if (valor === '=') {
+                try {
+                    let resultado = eval(document.calculadora.expressao.value.replaceAll(',', '.'));
+                    document.calculadora.expressao.value = resultado.toString().replaceAll('.', ',');
+                } catch (e) {
+                    document.calculadora.expressao.value = "Erro";
+                }
+            } else {
+                document.calculadora.expressao.value += valor;
+            }
+        }
+    </script>
+</body>
+
+</html>

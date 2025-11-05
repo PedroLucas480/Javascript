@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.-0">
+    <title>IF ELSE</title>
+    <style>
+        body{
+            display: flex;
+            justify-content: center;
+            flex-direction: column;
+            text-align: center;
+            align-items: center;
+            margin: 50px;
+            border: 2px  solid black;
+            box-shadow: 2px 2px 2px black;
+        }
+
+      #botao1{
+            display: flex;
+            width: 400px;
+            height: 400px;
+            border-radius: 50%;
+            background-color: black;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        #botao10{
+            display: flex;
+            width: 400px;
+            height: 400px;
+            border-radius: 50%;
+            background-color: black;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        input{
+           
+            width: 200px;
+            margin: auto;
+            margin-bottom: 20px;
+        }
+        section{
+            width: 620px;
+            height: 530px;
+        }
+		.caixa {
+
+			width: 150px;
+			height: 150px;
+			background-color:darkturquoise;
+			display: inline-block;
+			margin: 10px;
+			text-align: center;
+			line-height: 100px;
+			font-size: 24px;
+			cursor: pointer;
+		}
+        .caixa:hover{
+            background-color: aquamarine;
+        }
+        article{
+            width: 480px;
+            padding: 20px;
+            background-color: darkturquoise;
+            color: darkblue;
+        }
+
+            </style>
+</head>
+<body>
+    <h1>IF ELSE</h1>
+    <p>Vamos entender o que é if e else.</p>
+    <p>if else são declarações condicionais, ou seja, se não for esta opção vai ser a outra.</p>
+    <p>if   = se .</p>
+    <p>else = se não </p>
+    <p>Este exemplo abaixo vai dar pra demonstrar na pratica como funciona </p>
+    <h1>Vamos acender a luz para ver a mensagem.</h1>
+    <div id="botao1">
+    <h2>Você conseguiu ler esta mensagem
+        parabens!!
+    </h2>
+    
+    </div >
+    <input id="numero" type="number" placeholder="Digite um numero de 1 a 20 ">
+    <button id="ligou" onclick="ligar(); contarClick()">Testar</button>
+    <h3 id="contartentativas">0</h3>
+    <p id="numero2"></p>
+    <p id="contar"></p>
+    
+    <div>
+        <button id="resetar" onclick="resetarContador()">Reset</button>
+    </div>
+    <hr>
+    <hr width="100%"><h1>Switch</h1>
+    <p>É utilizado para realizar diferentes ações  com base  em <br> diferentes condições no mesmo bloco de verificação, se a <br> condição não seja compativel não será executada e o valor padrão será acionado  </p>
+
+<p>Exemplo1</p>
+<h2>Podemos fazer como no exemplo do if mas utilizando switch</h2>
+<div id="botao10">
+    <h2>Você conseguiu ler esta mensagem
+        parabens!!
+    </h2>
+    </div >
+    <input id="testenumero" type="number" placeholder="Digite um numero de 1 a 20 ">
+    <button id="ligou" onclick="verificarnumero(); contarClick()">Testar</button>
+   
+    <p id="numero3"></p>
+
+    <p>Exemplo2:</p>
+    <h1>Tente achar a caixa correta.</h1>
+    <section>
+	<div  class="caixa" onclick="testar(this); contarClick2()">1</div>
+	<div  class="caixa" onclick="testar(this); contarClick2()">2</div>
+	<div  class="caixa" onclick="testar(this); contarClick2()">3</div>
+	<div  class="caixa" onclick="testar(this); contarClick2()">4</div>
+    <div  class="caixa" onclick="testar(this); contarClick2()">5</div>
+	<div  class="caixa" onclick="testar(this); contarClick2()">6</div>
+	<div  class="caixa" onclick="testar(this); contarClick2()">7</div>
+	<div  class="caixa" onclick="testar(this); contarClick2()">8</div>
+    <div  class="caixa" onclick="testar(this); contarClick2()">9</div>
+</section>
+<div>
+<article>
+    <h3 id="resposta"></h3>
+    <h3 id="contartentativas2">0</h3>
+</article>
+-
+    <button id="resetar2" onclick="resetarContador()">Reset</button>
+    
+</div>
+   
+<script src="script.js"></script>
+</body>
+</html>
