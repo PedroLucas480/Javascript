@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Exemplo de Carrossel</title>
+
+    <!-- Importa o CSS do Bootstrap 3.4.1 -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+
+    <!-- Importa o jQuery, necessário para o Bootstrap funcionar -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+
+    <!-- Importa o JavaScript do Bootstrap para ativar o carrossel -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
+    <style>
+        
+        /* Estilo para centralizar as imagens do carrossel */
+        .carousel-inner>.item>img,
+        .carousel-inner>.item>a>img {
+            width: 80%;
+            /* Define largura das imagens */
+            margin: auto;
+            /* Centraliza as imagens */
+        }
+
+        /* Alinha o conteúdo da página ao centro */
+        body {
+            text-align: center;
+            overflow: hidden;
+
+        
+        }
+    </style>
+</head>
+
+<body>
+
+    <h1>Carrossel</h1> <!-- Título principal da página -->
+
+    <!-- Container principal do Bootstrap -->
+    <div class="container">
+        <br> <!-- Espaço em branco -->
+
+        <!-- Início do carrossel -->
+        <div id="meuCarrossel" class="carousel slide" data-ride="carousel">
+            <!-- Indicadores (bolinhas que indicam o slide atual) -->
+            <ol class="carousel-indicators">
+                <li data-target="#meuCarrossel" data-slide-to="0" class="active"></li> <!-- Slide 1 -->
+                <li data-target="#meuCarrossel" data-slide-to="1"></li> <!-- Slide 2 -->
+                <li data-target="#meuCarrossel" data-slide-to="2"></li> <!-- Slide 3 -->
+                <li data-target="#meuCarrossel" data-slide-to="3"></li> <!-- Slide 4 -->
+            </ol>
+
+            <!-- Área dos slides -->
+            <div class="carousel-inner" role="listbox">
+
+                <!-- Primeiro slide (ativo por padrão) -->
+                <div class="item active">
+                    <img src="anime2.jpg" alt="carro1" width="460" height="345">
+                    <div class="carousel-caption"> <!-- Legenda do slide -->
+                        <h3>Brasília</h3>
+                        <p>Carro 1</p>
+                    </div>
+                </div>
+
+                <!-- Segundo slide -->
+                <div class="item">
+                    <img src="anime1.jpg" alt="Corcel" width="460" height="345">
+                    <div class="carousel-caption">
+                        <h3>Uma festa muchu loca</h3>
+                        <p>ai complica nois</p>
+                    </div>
+                </div>
+
+                <!-- Terceiro slide -->
+                <div class="item">
+                    <img src="anime3.jpg" alt="Chevette" width="460" height="345">
+                    <div class="carousel-caption">
+                        <h3>Chevette</h3>
+                        <p>Carro 3</p>
+                    </div>
+                </div>
+
+                <!-- Quarto slide -->
+                <div class="item">
+                    <img src="anime4.png" alt="Fusca" width="460" height="345">
+                    <div class="carousel-caption">
+                        <h3>Fusca</h3>
+                        <p>Carro 4</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Botão de controle para voltar ao slide anterior -->
+            <a class="left carousel-control" href="#meuCarrossel" role="button" data-slide="prev">
+                <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span> <!-- Ícone de seta -->
+                <span class="sr-only">Anterior</span> <!-- Texto acessível apenas por leitores de tela -->
+            </a>
+
+            <!-- Botão de controle para avançar ao próximo slide -->
+            <a class="right carousel-control" href="#meuCarrossel" role="button" data-slide="next">
+                <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+                <span class="sr-only">Próximo</span>
+            </a>
+        </div> <!-- Fim do carrossel -->
+    </div> <!-- Fim do container -->
+
+</body>
+
+</html>

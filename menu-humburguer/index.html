@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <div id="menu-bar">
+        <!-- AQUI ESTAVA O ERRO — agora tem () -->
+        <div id="menu" onclick="onClickMenu()">
+            <div id="bar1"></div>
+            <div id="bar2"></div>
+            <div id="bar3"></div>
+        </div>
+
+        <ul class="nav" id="nav">
+            <li><a href="#">Home</a></li>
+            <li><a href="#">Filmes</a></li>
+            <li><a href="#">Séries</a></li>
+            <li><a href="#">Desenho</a></li>
+            <li><a href="#">Jogos</a></li>
+        </ul>
+    </div>
+
+    <div class="menu-bg" id="menu-bg"></div>
+
+    <script src="Script.js"></script>
+
+</body>
+
+</html>

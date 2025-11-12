@@ -1,0 +1,256 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Carrossel em JavaScript</title>
+  <style>
+    /* ====== ESTILOS GERAIS ====== */
+    *{box-sizing:border-box;margin:0;padding:0}
+    body{font-family:Arial, sans-serif;display:flex;align-items:center;justify-content:center;min-height:100vh;background:#450000}
+
+    /* ====== CONTAINER DO CARROSSEL ====== */
+    .carrossel {
+  width: min(920px, 96vw); /* largura máxima ou 96% da tela */
+  aspect-ratio: 16 / 7; /* mantém proporção de 16:7 */
+  position: relative; /* necessário para posicionar botões e legendas */
+  overflow: hidden; /* esconde partes fora da área visível */
+  border-radius: 12px; /* bordas arredondadas */
+  background: #222; /* cor de fundo padrão */
+  
+  /* sombra uniforme e suave */
+  box-shadow: 0 0 50px rgba(255, 0, 0, 0.6); /* brilho vermelho */
+}
+
+
+    /* ====== FAIXA QUE CONTÉM OS SLIDES ====== */
+    .faixa-carrossel{
+      display:flex;  /* Organiza slides lado a lado */
+      height:100%;
+      transition:transform 480ms cubic-bezier(.22,.9,.35,1);  /* Suaviza a transição */
+      will-change:transform;
+    }
+
+    /* ====== CADA SLIDE ====== */
+    .slide-carrossel{
+      min-width:100%; /* Cada slide ocupa 100% da largura */
+      height:100%;
+      position:relative;
+      flex-shrink:0;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      color:rgb(255, 255, 255);
+    }
+
+    .slide-carrossel img{width:100%;height:100%;object-fit:cover;display:block}
+
+    /* ====== LEGENDA SOBRE A IMAGEM ====== */
+    .legenda-slide{
+      position:absolute;
+      left:20px;
+      bottom:18px;
+      background:linear-gradient(180deg,transparent,rgba(0,0,0,0.45));
+      padding:10px 14px;
+      border-radius:8px;
+      backdrop-filter:blur(4px); /* Fundo desfocado */
+    }
+
+    /* ====== BOTÕES DE NAVEGAÇÃO ====== */
+    .botao-carrossel{
+      position:absolute;
+      top:50%;
+      transform:translateY(-50%);
+      width:44px;height:44px;
+      border-radius:10px;border:0;
+      background:rgba(91, 171, 101, 0.12);
+      backdrop-filter:blur(2px);
+      cursor:pointer;
+      display:flex;align-items:center;justify-content:center;
+    }
+
+    .botao-carrossel:hover{background:rgba(255,255,255,0.18)}
+    .anterior{left:14px}
+    .proximo{right:14px}
+
+    /* ====== INDICADORES (PONTOS INFERIORES) ====== */
+    .pontos-carrossel{
+      position:absolute;
+      left:50%;
+      transform:translateX(-50%);
+      bottom:12px;
+      display:flex;
+      gap:8px;
+    }
+
+    .ponto-carrossel{
+      width:10px;height:10px;border-radius:50%;
+      background:rgba(255,255,255,0.45);
+      cursor:pointer;
+    }
+
+    .ponto-carrossel[aria-current="true"]{
+      width:28px;border-radius:999px;
+      background:rgba(255,255,255,0.95);
+    }
+
+    /* ====== CLASSE PARA ELEMENTOS VISUALMENTE ESCONDIDOS ====== */
+    .oculto{
+      position:absolute!important;
+      height:1px;width:1px;
+      overflow:hidden;
+      clip:rect(1px,1px,1px,1px);
+      white-space:nowrap;
+    }
+
+    /* ====== AJUSTE PARA CELULARES ====== */
+    @media (max-width:560px){
+      .legenda-slide{left:12px;right:12px;font-size:14px}
+      .botao-carrossel{width:38px;height:38px}
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ====== ESTRUTURA DO CARROSSEL ====== -->
+  <section class="carrossel" aria-roledescription="carousel" aria-label="Galeria de imagens">
+
+    <!-- Faixa com slides -->
+    <div class="faixa-carrossel">
+      <div class="slide-carrossel" data-indice="0">
+        <img src="carro1.jpg" alt="Fusca 1">
+        <div class="legenda-slide">Fusca 1 — descrição curta</div>
+      </div>
+      <div class="slide-carrossel" data-indice="1">
+        <img src="carro2.png" alt="Corcel 2">
+        <div class="legenda-slide">Corcel 2 — descrição curta</div>
+      </div>
+      <div class="slide-carrossel" data-indice="2">
+        <img src="carro3.jpg" alt="Chevette 3">
+        <div class="legenda-slide">Chevette 3 — descrição curta</div>
+      </div>
+    </div>
+
+    <!-- Botões de navegação -->
+    <button class="botao-carrossel anterior" aria-label="Slide anterior">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M15 18l-6-6 6-6" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </button>
+    <button class="botao-carrossel proximo" aria-label="Próximo slide">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M9 6l6 6-6 6" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </button>
+
+    <!-- Indicadores inferiores -->
+    <div class="pontos-carrossel" role="tablist" aria-label="Navegar slides"></div>
+
+    <!-- Texto oculto para acessibilidade -->
+    <p class="oculto" id="status-carrossel">Slide 1 de 3</p>
+  </section>
+
+  <script>
+  // ====== SCRIPT DO CARROSSEL ======
+  (function(){
+    // Seleção de elementos principais
+    const carrossel = document.querySelector('.carrossel');
+    const faixa = carrossel.querySelector('.faixa-carrossel');
+    const slides = Array.from(faixa.children);
+    const botaoAnterior = carrossel.querySelector('.anterior');
+    const botaoProximo = carrossel.querySelector('.proximo');
+    const pontosContainer = carrossel.querySelector('.pontos-carrossel');
+    const status = document.getElementById('status-carrossel');
+
+    // Controle de estado
+    let indiceAtual = 0;
+    const totalSlides = slides.length;
+    const intervalo = 4000; // tempo de troca automática (4s)
+    let temporizador = null;
+    let pausado = false;
+
+    // ====== CRIAÇÃO DOS PONTOS ======
+    slides.forEach((_, i) => {
+      const ponto = document.createElement('button');
+      ponto.className = 'ponto-carrossel';
+      ponto.type = 'button';
+      ponto.setAttribute('aria-label', `Ir para slide ${i+1}`);
+      ponto.setAttribute('role','tab');
+      ponto.dataset.indice = i;
+      if(i === 0) ponto.setAttribute('aria-current','true');
+      pontosContainer.appendChild(ponto);
+    });
+
+    const pontos = Array.from(pontosContainer.children);
+
+    // ====== FUNÇÃO PARA MUDAR DE SLIDE ======
+    function irPara(indice){
+      const novoIndice = (indice % totalSlides + totalSlides) % totalSlides; // corrige valores negativos
+      const deslocamento = -novoIndice * 100;
+      faixa.style.transform = `translateX(${deslocamento}%)`;
+      indiceAtual = novoIndice;
+      atualizarIndicadores();
+      atualizarStatus();
+    }
+
+    // ====== NAVEGAÇÃO PRÓXIMO/ANTERIOR ======
+    function proximo(){ irPara(indiceAtual + 1); }
+    function anterior(){ irPara(indiceAtual - 1); }
+
+    // ====== ATUALIZA OS INDICADORES ======
+    function atualizarIndicadores(){
+      pontos.forEach((p, i) => {
+        if(i === indiceAtual) p.setAttribute('aria-current','true');
+        else p.removeAttribute('aria-current');
+      });
+    }
+
+    // ====== ATUALIZA TEXTO DE STATUS (ACESSIBILIDADE) ======
+    function atualizarStatus(){
+      status.textContent = `Slide ${indiceAtual+1} de ${totalSlides}`;
+    }
+
+    // ====== EVENTOS DE CLIQUE ======
+    botaoProximo.addEventListener('click', () => { proximo(); reiniciarAuto(); });
+    botaoAnterior.addEventListener('click', () => { anterior(); reiniciarAuto(); });
+
+    // Clique nos pontos (indicadores)
+    pontos.forEach(ponto => {
+      ponto.addEventListener('click', (e) => {
+        const i = Number(e.currentTarget.dataset.indice);
+        irPara(i);
+        reiniciarAuto();
+      });
+    });
+
+    // ====== NAVEGAÇÃO PELO TECLADO ======
+    document.addEventListener('keydown', (e) => {
+      if(e.key === 'ArrowRight') { proximo(); reiniciarAuto(); }
+      if(e.key === 'ArrowLeft') { anterior(); reiniciarAuto(); }
+    });
+
+    // ====== PAUSA AO PASSAR O MOUSE ======
+    carrossel.addEventListener('mouseenter', () => { pausar(); });
+    carrossel.addEventListener('mouseleave', () => { continuar(); });
+
+    // ====== SUPORTE A TOQUE (MOBILE) ======
+    let inicioX = 0, deltaX = 0;
+    carrossel.addEventListener('touchstart', (e) => { inicioX = e.touches[0].clientX; pausar(); }, {passive:true});
+    carrossel.addEventListener('touchmove', (e) => { deltaX = e.touches[0].clientX - inicioX; }, {passive:true});
+    carrossel.addEventListener('touchend', () => {
+      if(Math.abs(deltaX) > 40){ if(deltaX < 0) proximo(); else anterior(); }
+      deltaX = 0; continuar(); reiniciarAuto();
+    });
+
+    // ====== CONTROLE DE AUTO-PLAY ======
+    function iniciarAuto(){
+      if(temporizador) clearInterval(temporizador);
+      temporizador = setInterval(() => { if(!pausado) proximo(); }, intervalo);
+    }
+    function pausar(){ pausado = true; }
+    function continuar(){ pausado = false; }
+    function reiniciarAuto(){ pausar(); iniciarAuto(); }
+
+    // ====== INICIALIZAÇÃO ======
+    irPara(0);
+    iniciarAuto();
+  })();
+  </script>
+</body>
+</html>

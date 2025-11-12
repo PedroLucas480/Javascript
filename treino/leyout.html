@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Main e Aside lado a lado</title>
+  <style>
+    body { 
+      background: rgb(5, 255, 43);
+      margin: 0;
+      font-family: Arial, sans-serif;
+    }
+
+    header {
+      background: red;
+      height: 60px;
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      padding-right: 10px;
+    }
+
+    nav {
+      background: yellow;
+      height: 40px;
+      width: 100px;
+      margin-left: 10px;
+    }
+
+    /* Container principal que segura main e aside lado a lado */
+    .conteudo {
+      display: flex;
+      gap: 10px;
+      margin: 10px;
+      height: 70vh;
+    }
+
+    main {
+      background: rgb(62, 229, 255);
+      flex: 2; /* Ocupa mais espaço que o aside */
+      display: flex;
+      flex-direction: column; /* Caixas empilhadas */
+      gap: 10px;
+      padding: 10px;
+    }
+
+    aside {
+      background: blueviolet;
+      flex: 1; /* Ocupa menos espaço */
+      display: flex;
+      flex-direction: column; /* Caixas empilhadas */
+      gap: 10px;
+      padding: 10px;
+      color: white;
+    }
+
+    .caixa {
+      background: rgb(255, 238, 0);
+      color: black;
+      height: 100px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 5px;
+      font-weight: bold;
+    }
+
+    section {
+      background: lightgray;
+      height: 100px;
+      margin: 5px;
+    }
+
+    footer {
+      background: gray;
+      height: 60px;
+      margin: 5px;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <nav></nav>
+    <nav></nav>
+    <nav></nav>
+  </header>
+
+  <!-- 🔥 Container com main e aside lado a lado -->
+  <div class="conteudo">
+    <main>
+      <div class="caixa">Caixa 1 (Main)</div>
+      <div class="caixa">Caixa 2 (Main)</div>
+      <div class="caixa">Caixa 3 (Main)</div>
+    </main>
+
+    <aside>
+      <div class="caixa">Caixa 1 (Aside)</div>
+      <div class="caixa">Caixa 2 (Aside)</div>
+    </aside>
+  </div>
+
+  <section></section>
+  <footer></footer>
+</body>
+</html>

@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<STyle>
+    /* Estilização geral do corpo da página */
+    body {
+        font-family: 'Poppins', sans-serif;
+        /* Fonte do texto */
+        background: linear-gradient(135deg, #00b4db, #0083b0);
+        /* Fundo gradiente */
+        color: white;
+        /* Cor do texto */
+        text-align: center;
+        /* Centraliza o texto */
+        padding: 0;
+        height: 100vh;
+        /* Ocupa a altura total da tela */
+        
+    }
+
+    button {
+        background: yellow;
+        /* Cor de fundo */
+        border: none;
+        /* Sem borda */
+        padding: 10px 20px;
+        /* Espaçamento interno */
+        border-radius: 10px;
+        /* Cantos arredondados */
+        color: rgb(255, 4, 4);
+        /* Cor do texto do botão */
+        font-size: 1em;
+        /* Tamanho do texto */
+        cursor: pointer;
+        /* Cursor ao passar em cima */
+        transition: background 0.3s;
+        /* Animação suave para mudança de fundo */
+    }
+
+    /* Estilização dos textos de mensagem, fase e tempo */
+    #mensagem,
+    #fase,
+    #tempo {
+        font-size: 1.2em;
+        margin: 15px;
+    }
+</STyle>
+
+<body>
+
+
+
+    <div id="mensagem">
+        <button onclick="iniciarJogo()">Normal</button>
+    </div>
+
+    <!-- Botão de reiniciar o jogo -->
+    <button id="resetar" onclick="resetarJogo()">Regresiva</button>
+
+    <!-- Exibição do tempo restante -->
+    <div id="tempo">Tempo: 10s</div>
+
+    <div id="tempo1">Tempo: 0s</div>
+
+
+
+
+    <script src="script1.js"></script>
+</body>
+
+</html>

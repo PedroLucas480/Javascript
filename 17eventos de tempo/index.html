@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<!-- Declaração do tipo de documento HTML5 -->
+<html lang="en">
+<head>
+    <!-- Metadados e configuração da página -->
+    <meta charset="UTF-8"> <!-- Define codificação de caracteres -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- Para responsividade em dispositivos móveis -->
+    <title>Jogo de Ordenação</title> <!-- Título que aparece na aba do navegador -->
+
+    <style>
+        /* Estilização geral do corpo da página */
+        body{
+            font-family: 'Poppins', sans-serif; /* Fonte do texto */
+            background: linear-gradient(135deg, #00b4db, #0083b0); /* Fundo gradiente */
+            color: white; /* Cor do texto */
+            text-align: center; /* Centraliza o texto */
+            padding: 0;
+            height: 100vh; /* Ocupa a altura total da tela */
+        }
+
+        h1{
+            margin-top: 20px; /* Espaçamento superior */
+            font-size: 2.2em; /* Tamanho da fonte */
+        }
+
+        /* Contêiner que vai segurar os números do jogo */
+        #numbers{
+            display: flex; /* Flexbox para organizar os números */
+            flex-wrap: wrap; /* Permite quebra de linha */
+            justify-content: center; /* Centraliza horizontalmente */
+            max-width: 400px; /* Largura máxima do contêiner */
+            margin: 30px auto; /* Centraliza o contêiner na tela */
+            gap: 10px; /* Espaço entre os números */
+        }
+
+        /* Estilização de cada número clicável */
+        .numero{
+            width: 70px;
+            height: 70px;
+            background: rgba(255, 255, 255, 0.2); /* Fundo semi-transparente */
+            backdrop-filter: blur(10px); /* Desfoque do fundo atrás do número */
+            border-radius: 12px; /* Cantos arredondados */
+            display: flex; /* Para centralizar o texto dentro */
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5em; /* Tamanho do número */
+            cursor: pointer; /* Muda o cursor ao passar em cima */
+            transition: all 0.3s ease; /* Animação suave em mudanças */
+        }
+
+        /* Efeito ao passar o mouse sobre o número */
+        .numero:hover{
+            background: rgba(255, 255, 255, 0.4);
+            transform: scale(1.1); /* Aumenta o tamanho levemente */
+        }
+
+        /* Estilização dos textos de mensagem, fase e tempo */
+        #mensagem, #fase, #tempo{
+            font-size: 1.2em;
+            margin: 15px;
+        }
+
+        /* Estilização dos botões */
+        button{
+            background: yellow; /* Cor de fundo */
+            border: none; /* Sem borda */
+            padding: 10px 20px; /* Espaçamento interno */
+            border-radius: 10px; /* Cantos arredondados */
+            color: white; /* Cor do texto do botão */
+            font-size: 1em; /* Tamanho do texto */
+            cursor: pointer; /* Cursor ao passar em cima */
+            transition: background 0.3s; /* Animação suave para mudança de fundo */
+        }
+
+        button:hover{
+            background: yellow; /* Mantém o botão amarelo ao passar o mouse */
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Título principal da página -->
+    <h1>Evento de tempo</h1>
+
+    <!-- Explicações sobre eventos de tempo e setInterval/setTimeout -->
+    <p>Os eventos permitem a execução do código em intervalos de tempo especificados</p>
+    <p>Esses intervalos de tempo são chamados de evento de cronometragem</p>
+    <p>Vamos utilizar dois métodos de contagem de tempo</p>
+    <p>setTimeout(function, tempo em milissegundos) → executa a função depois do tempo especificado</p>
+    <p>setInterval(function, milissegundos) → repete a função continuamente a cada intervalo</p>
+
+    <!-- Instruções do jogo -->
+    <p>Jogo de Ordenação</p>
+    <p>Clique nos números em ordem crescente antes que o tempo acabe!!</p>
+
+    <!-- Exibição da fase atual -->
+    <div id="fase">Fase: 1</div>
+
+    <!-- Exibição do tempo restante -->
+    <div id="tempo">Tempo: 10s</div>
+
+    <!-- Contêiner para os números do jogo -->
+    <div id="numbers"></div>
+
+    <!-- Contêiner para mensagens e botão iniciar -->
+    <div id="mensagem">
+        <button onclick="iniciarJogo()">Começar jogo</button>
+    </div>
+
+    <!-- Botão de reiniciar o jogo -->
+    <button id="resetar" onclick="resetarJogo()">Reiniciar</button>
+
+    <!-- Inclusão do arquivo JavaScript externo -->
+    <script src="script.js"></script>
+</body>
+</html>
